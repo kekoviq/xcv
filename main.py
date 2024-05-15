@@ -22,9 +22,9 @@ from telethon.tl.types import InputPeerUser
 from telethon.tl.functions.contacts import GetBlockedRequest, UnblockRequest
 #alpha
 DEFAULTUSERBIO = "الحمد الله"
-APP_ID  = "9398423"
-API_HASH = "f059e61617b899e13ebcaceabcb58545"
-STRING = "1BJWap1wBu4jspl5JYSiYQaLqbwWMv1nZ7Yii-cBT1Fn28wIwWbK9UHU8SG61CE_veJFjjD4gBLsmCnX4Kp-nvmhQ2hNRc7qZDX0cQhT8iveINqubAdLxNqCr-0pwhLtcC0WLKfmWhgVbBINHd4LnVBDAo_KclWwevywXon2hbJPRzXhLK03Wpje1xWqclJeLDzAlrMYpr3Z5EPF85Dz5nEySGAisqDn7GO0s8mTjXhx9y2wrhGDmTfSyth-VLOVNLRR-FyB-ZcuwA02igNI8LLLouLqPFDXSUnI-Z0z_U7XBsfQ1zQeQcfc0NCWzFULDEXXm3IQA_pjI9D_1OsSBk2gFQ_jKoPs="
+APP_ID  = "27840800"
+API_HASH = "e1f5ff0a428f946920c8f2d089419111"
+STRING = "1ApWapzMBu1Df2KMjqeLRQ_3lqPnckkLa0IyCLWkWl6UAbKuP4ba4wLlXQvUykfiqE6fUpRvp5MLO_w43wuGZ1ytm-gjd0g3MMUGAlG7N9504u9MVRO5B3vZhf5OAvUxam3wnTEi1Y2bnVKYFAW1oayFSZGNd6xCKQ1vOmK7NgZA3fFMunHiB1FQVu4Q4EKhcXFP2kSdfW8sUQQYFctQgTDCqvlYG5Mom96oVhkORBR-LygHsvqvnAzz3C3MfsneGkUdHVjzK3uUTuo-BhcuesbM_7nLGuyYZJhcVFeW-xMWacM2MdNOO-jxED9dvOMDUFZiMnHqJDyoEuGFBW7dCdLamyoYmqyE="
 
 alpha = TelegramClient(StringSession(STRING), APP_ID, API_HASH)
 alpha.start()
@@ -597,7 +597,7 @@ print("""
 
                     
 ---------------------
-𝗚𝗡𝗚  = تم تشغيل السورس
+𝗔𝗟𝗣𝗛𝗔  = تم تشغيل السورس
 ---------------------
 
 .
