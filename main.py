@@ -295,7 +295,7 @@ async def _(event):
 @alpha.on(events.NewMessage(outgoing=True, pattern=".فحص"))
 async def _(event):
       await event.edit("""
-𝗚𝗡𝗚 userbot
+𝗔𝗟𝗣𝗛𝗔 userbot
 ✦━━━━━━━━✦
 - hi lol 𝗔𝗟𝗣𝗛𝗔 userbot
 - 𝗉𝗒𝗍𝗁𝗈𝗇 ⭟ 1.0
