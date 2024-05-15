@@ -22,9 +22,9 @@ from telethon.tl.types import InputPeerUser
 from telethon.tl.functions.contacts import GetBlockedRequest, UnblockRequest
 #alpha
 DEFAULTUSERBIO = "الحمد الله"
-APP_ID  = "26658024"
-API_HASH = "0420ddd62f919a02d8c7a76349ee52e8"
-STRING = "1BJWap1wBuwlmAXV4LVAsjxKBqOfX9cvfBTofzYF_Bwtuo3xBewGMmm1uufVNo-ekFYBs9uxMFAkyL7V5hDljeKRmKPKGRGvv_0HyI1dbxI_BPO50WKiQXL4Qn-j4PjDuWzmHRO-J0WfGP1Vxu1HBvQ7WA0C_pEuBYFcj3aG_v19cZlLdxqKHkFEq5AXbxduBA3xUqbECRdbs7xsgvV-NFOmyr1dp3LsIRxgEU6UAj6B_r1lQ-py_DiqOIwB5xrdI9sDr8Uyo2REOYQsP67HFRLw5tmsZ2E-U-Ky9qbWDyTuG1Qw-7eLTKjC-iMGLTfaWJme60HPlFhCFVS1WRAYBDh8ljMb9LOo="
+APP_ID  = "9398423"
+API_HASH = "f059e61617b899e13ebcaceabcb58545"
+STRING = "1BJWap1wBu4jspl5JYSiYQaLqbwWMv1nZ7Yii-cBT1Fn28wIwWbK9UHU8SG61CE_veJFjjD4gBLsmCnX4Kp-nvmhQ2hNRc7qZDX0cQhT8iveINqubAdLxNqCr-0pwhLtcC0WLKfmWhgVbBINHd4LnVBDAo_KclWwevywXon2hbJPRzXhLK03Wpje1xWqclJeLDzAlrMYpr3Z5EPF85Dz5nEySGAisqDn7GO0s8mTjXhx9y2wrhGDmTfSyth-VLOVNLRR-FyB-ZcuwA02igNI8LLLouLqPFDXSUnI-Z0z_U7XBsfQ1zQeQcfc0NCWzFULDEXXm3IQA_pjI9D_1OsSBk2gFQ_jKoPs="
 
 alpha = TelegramClient(StringSession(STRING), APP_ID, API_HASH)
 alpha.start()
