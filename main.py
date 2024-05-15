@@ -284,7 +284,6 @@ async def _(event):
 @alpha.on(events.NewMessage(outgoing=True, pattern=".فحص"))
 async def _(event):
       await event.edit("""
-https://telegra.ph/file/1ca155d4a74c013290141.jpg
 𝗚𝗡𝗚 userbot
 ✦━━━━━━━━✦
 - hi lol 𝗚𝗡𝗚 userbot
