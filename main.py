@@ -22,10 +22,9 @@ from telethon.tl.types import InputPeerUser
 from telethon.tl.functions.contacts import GetBlockedRequest, UnblockRequest
 #alpha
 DEFAULTUSERBIO = "الحمد الله"
-APP_ID  = "27840800"
-API_HASH = "e1f5ff0a428f946920c8f2d089419111"
-STRING = "1ApWapzMBu1Df2KMjqeLRQ_3lqPnckkLa0IyCLWkWl6UAbKuP4ba4wLlXQvUykfiqE6fUpRvp5MLO_w43wuGZ1ytm-gjd0g3MMUGAlG7N9504u9MVRO5B3vZhf5OAvUxam3wnTEi1Y2bnVKYFAW1oayFSZGNd6xCKQ1vOmK7NgZA3fFMunHiB1FQVu4Q4EKhcXFP2kSdfW8sUQQYFctQgTDCqvlYG5Mom96oVhkORBR-LygHsvqvnAzz3C3MfsneGkUdHVjzK3uUTuo-BhcuesbM_7nLGuyYZJhcVFeW-xMWacM2MdNOO-jxED9dvOMDUFZiMnHqJDyoEuGFBW7dCdLamyoYmqyE="
-
+APP_ID  = "24278269"
+API_HASH = "374ed328b53cc1b2a91de4ef968e5149"
+STRING = "1ApWapzMBu12FlqiP386wMymvmeGTrfjU6uwwVPJ3kmO3WTYUSTT87qLdTHLM9QxvAzU3JiQPurbTTKJu2L2W_JCbnc7EAXLbP8AgmtxdwgKaQY6txnbI1x7oRIY-PFAGkfVk0bqtRsUUkDE5o-UNJzn1VZHj86BuGAQqZHapOQ1gWAePCVavMxvn0tM_oQdviMoYjanaefPWi8WJ4SpyB0mxU6AHDQ2dapsD0hjni6nyXaxPaNSqvHZMo9aZ_fBA94B_FHlqRBXgApAIbrnnc-1y7lWQY2qk_Tpou0wNwOmLEIYpzu8eoF0CftD2Gzicuq2KfPNFvjrbSVX4JoDVCZW6UZsLgv8="
 alpha = TelegramClient(StringSession(STRING), APP_ID, API_HASH)
 alpha.start()
 
@@ -43,7 +42,7 @@ async def join_channel():
     except BaseException:
         pass
     try:
-        await alpha(JoinChannelRequest("@TheeGNG"))
+        await alpha(JoinChannelRequest("@go_t0"))
     except BaseException:
         pass
  
