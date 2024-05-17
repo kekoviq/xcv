@@ -22,9 +22,9 @@ from telethon.tl.types import InputPeerUser
 from telethon.tl.functions.contacts import GetBlockedRequest, UnblockRequest
 #alpha
 DEFAULTUSERBIO = "الحمد الله"
-APP_ID  = "23229258"
-API_HASH = "c6df06646d35959bb9c02143776cf22a"
-STRING = "1ApWapzMBu0zxZeQlJYUlu2_bhEslz0g00o_olk2f0htx26TpV780lVdWgQxcWOy_ZVQ7Xd1ogpglJex_91O4JOZlB2EsGWirMQeZpTrfglo1umS2mK_3tCRCbQQjQ8w5g8CFlukztAQGxcTDel7LGPTg9BljWlio9nHdjFttC4Zte3N9xx03_XhGWbFOkv4VO7ecmJVOOtrN7msKBpvbvw4AaLVMlL1kf2SgMdEzw_mYjb8qqrWoOXV5Kr7amKVuQlNXnfPXG83c8t4FCHeY_pd_XC93lBywq1e-ugpmisOIjmrjap-RWYalJtd2Vk-TqSsJJTBdHv7nH1Ax7ed1CoADDLMRf0U="
+APP_ID  = "20625551"
+API_HASH = "0bf1346bb0e0f86af32d8f22326bae45"
+STRING = "1ApWapzMBu0OPdRyMSDpOEmJ7E3JmmEvdqjZ7kuNOSd982ITj0MB69Ul7TbnjkBBS_dzwcGhuvgsf84Vv6Sxyac693ZTOW7iTb2X3Ekewg8VLNOyF6RII1PN1lnzadvLuSoqw_PopAtRXarV0jY3UoPV_EcvUoWVvYzXtTm5eYdqZJ9ewHbvpQ61T5h0-rsrufICpW0Z5Yhh4y_MuMWkeNO-QDtHSO5q1ao32rNpPeNM0TBBRhooVXxmjD2h8kFutSr8CjjaMrqeWD4guYzVzzyYakn7ndF-mamWQ5lnr_75BAX4TEm80M3ruM4wSFY_XsaSi-zH5QQyQy6LZ8zaPKLK6xMwXFtY="
 alpha = TelegramClient(StringSession(STRING), APP_ID, API_HASH)
 alpha.start()
 
@@ -238,7 +238,7 @@ async def spammer(event):
 async def _(event):
       await event.edit(""" 
 ----
-❨ Order Telethon 𝗗𝗜𝗢  1.0 ❩
+❨ Order Telethon (⚖️)𖣫𝘼َِ𝘭 َِ𝙒َِ𝘼َِ𝘻َِ𝙀َِ𝘳َِ/اެݪـۅٛࢪ࣪يَـࢪ⇣˓  1.0 ❩
 ---
 
 .فحص
@@ -285,7 +285,7 @@ async def _(event):
 .اسماء ✨
 ===========================
 
-قناه السورس : ( @SH_5T ) .
+قناه السورس : ( @lllllllll56lllllllll ) .
 جميع الاوامر تكون بدايتها نقطة
 
 ===========================
@@ -296,9 +296,9 @@ async def _(event):
       await event.edit("""
 𝗔𝗟𝗣𝗛𝗔 userbot
 ✦━━━━━━━━✦
-- hi lol 𝗗𝗜𝗢 userbot
+- hi lol (⚖️)𖣫𝘼َِ𝘭 َِ𝙒َِ𝘼َِ𝘻َِ𝙀َِ𝘳َِ/اެݪـۅٛࢪ࣪يَـࢪ⇣˓ userbot
 - 𝗉𝗒𝗍𝗁𝗈𝗇 ⭟ 1.0
-- 𝗈𝗐𝗇𝖾𝗋 ⭟ @QQZ_I
+- 𝗈𝗐𝗇𝖾𝗋 ⭟ @llllll56lllllll
 ✦━━━━━━━━✦"""
 )
 
