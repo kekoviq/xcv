@@ -4,6 +4,13 @@ import logging
 import asyncio
 import time
 import random
+import pytz
+from telethon import TelegramClient, events, functions
+from telethon import TelegramClient, events
+from telethon.tl.functions.photos import UploadProfilePhotoRequest, GetUserPhotosRequest
+from telethon.tl.types import InputPeerEmpty
+from datetime import datetime
+from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl import functions, types
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.utils import get_display_name
@@ -20,13 +27,14 @@ from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.sessions import StringSession
 from telethon.tl.types import InputPeerUser
 from telethon.tl.functions.contacts import GetBlockedRequest, UnblockRequest
-#alpha
+#client
 DEFAULTUSERBIO = "الحمد الله"
-APP_ID  = "20625551"
-API_HASH = "0bf1346bb0e0f86af32d8f22326bae45"
-STRING = "1ApWapzMBu0OPdRyMSDpOEmJ7E3JmmEvdqjZ7kuNOSd982ITj0MB69Ul7TbnjkBBS_dzwcGhuvgsf84Vv6Sxyac693ZTOW7iTb2X3Ekewg8VLNOyF6RII1PN1lnzadvLuSoqw_PopAtRXarV0jY3UoPV_EcvUoWVvYzXtTm5eYdqZJ9ewHbvpQ61T5h0-rsrufICpW0Z5Yhh4y_MuMWkeNO-QDtHSO5q1ao32rNpPeNM0TBBRhooVXxmjD2h8kFutSr8CjjaMrqeWD4guYzVzzyYakn7ndF-mamWQ5lnr_75BAX4TEm80M3ruM4wSFY_XsaSi-zH5QQyQy6LZ8zaPKLK6xMwXFtY="
-alpha = TelegramClient(StringSession(STRING), APP_ID, API_HASH)
-alpha.start()
+APP_ID  = "9398423"
+API_HASH = "f059e61617b899e13ebcaceabcb58545"
+STRING = "1BJWap1wBu4jspl5JYSiYQaLqbwWMv1nZ7Yii-cBT1Fn28wIwWbK9UHU8SG61CE_veJFjjD4gBLsmCnX4Kp-nvmhQ2hNRc7qZDX0cQhT8iveINqubAdLxNqCr-0pwhLtcC0WLKfmWhgVbBINHd4LnVBDAo_KclWwevywXon2hbJPRzXhLK03Wpje1xWqclJeLDzAlrMYpr3Z5EPF85Dz5nEySGAisqDn7GO0s8mTjXhx9y2wrhGDmTfSyth-VLOVNLRR-FyB-ZcuwA02igNI8LLLouLqPFDXSUnI-Z0z_U7XBsfQ1zQeQcfc0NCWzFULDEXXm3IQA_pjI9D_1OsSBk2gFQ_jKoPs="
+
+client = TelegramClient(StringSession(STRING), APP_ID, API_HASH)
+client.start()
 
 LOGS = logging.getLogger(__name__)
 
@@ -38,11 +46,11 @@ logging.basicConfig(
 
 async def join_channel():
     try:
-        await alpha(JoinChannelRequest("@FoRkrar"))
+        await client(JoinChannelRequest("@lllllZlll"))
     except BaseException:
         pass
     try:
-        await alpha(JoinChannelRequest("@go_t0"))
+        await client(JoinChannelRequest("@TheeGNG"))
     except BaseException:
         pass
  
@@ -60,9 +68,9 @@ DEL_TIME_OUT = 60
 normzltext = "1234567890"
 namerzfont = "𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫𝟢"
 
+makkah_tz = pytz.timezone('Asia/Riyadh')
 
-
-@alpha.on(events.NewMessage(outgoing=True, pattern=".ذاتية"))
+@client.on(events.NewMessage(outgoing=True, pattern=".ذاتية"))
 async def roz(bakar):
     if not bakar.is_reply:
         return await bakar.edit(
@@ -70,35 +78,60 @@ async def roz(bakar):
         )
     rr9r7 = await bakar.get_reply_message()
     pic = await rr9r7.download_media()
-    await alpha.send_file(
+    await client.send_file(
         "me", pic, caption=f"**⪼ عزيزي هذه هي الصورة او الفيديو التي تم حفظه هنا**"
     )
     await bakar.delete()
-    
-@alpha.on(events.NewMessage(outgoing=True, pattern=".اسم وقتي"))
-async def _(event):
-    if event.fwd_from:
-        return
-    while True:
-        HM = time.strftime("%I:%M")
-        for normal in HM:
-            if normal in normzltext:
-                namefont = namerzfont[normzltext.index(normal)]
-                HM = HM.replace(normal, namefont)
-        name = f"{HM}"
-        LOGS.info(name)
-        try:
-            await alpha(
-                functions.account.UpdateProfileRequest(
-                    first_name=name
-                )
-            )
-        except FloodWaitError as ex:
-            LOGS.warning(str(e))
-            await asyncio.sleep(ex.seconds)
-        await asyncio.sleep(DEL_TIME_OUT)
 
-@alpha.on(events.NewMessage(outgoing=True, pattern=".بايو وقتي"))
+@client.on(events.NewMessage(pattern='.ايدي'))
+async def handler(event):
+    # Check if the message is a reply
+    if event.is_reply:
+        # Fetch the replied-to message
+        original_msg = await event.get_reply_message()
+        # Check if there's a user associated with the message
+        if original_msg.sender:
+            # Fetch user information
+            user = await client.get_entity(original_msg.sender_id)
+            # Create the reply message
+            info_msg = f""" 
+   📝  
+                     ★•┉  ┉ ┉┉ ┉ ┉  ┉ ┉ ┉ ┉•★ 
+                     
+✦╎الاسـم    ⇠ {user.first_name} {user.last_name or ""}\n
+✦╎المعـرف  ⇠ @{user.username}\n
+✦╎الايـدي   ⇠ {user.id}\n
+ٴ★•┉ ┉ ┉ ┉ ┉ ┉  ┉ ┉ ┉ ┉•★"""
+
+            # Fetch user's profile photos
+            photos = await client(GetUserPhotosRequest(user_id=user.id, offset=0, max_id=0, limit=1))
+            if photos.photos:
+                # Download the first photo
+                photo = photos.photos[0]
+                # Send the photo as "Telegram media"
+                await client.send_file(event.chat_id, photo, caption=info_msg)
+            else:
+                await event.reply('This user does not have a profile picture.')
+
+            
+@client.on(events.NewMessage(pattern='.تصفية الكروبات'))
+async def exit_groups(event):
+    # التحقق من أن الأمر أرسل من قبل المالك
+    if event.sender_id == (await client.get_me()).id:
+        groups_exited = 0  # متغير لتتبع عدد المجموعات التي تم الخروج منها
+        async for dialog in client.iter_dialogs():
+            if dialog.is_group:
+                # التحقق من أن المستخدم ليس مشرفًا في المجموعة
+                if not dialog.entity.creator and not dialog.entity.admin_rights:
+                    await client(LeaveChannelRequest(dialog.id))
+                    groups_exited += 1  # زيادة العداد
+                    print(f'تم الخروج من المجموعة: {dialog.name}')
+        # حذف رسالة الأمر
+        await event.delete()
+        # إرسال تأكيد العملية مع عدد المجموعات التي تم الخروج منها
+        await client.send_message(event.chat_id, f'تم الخروج من {groups_exited} مجموعات.')
+
+@client.on(events.NewMessage(outgoing=True, pattern=".بايو وقتي"))
 async def _(event):
     if event.fwd_from:
         return
@@ -111,7 +144,7 @@ async def _(event):
         bio = f"{DEFAULTUSERBIO} |️ {HM}"
         LOGS.info(bio)
         try:
-            await alpha(
+            await client(
                 functions.account.UpdateProfileRequest(
                     about=bio
                 )
@@ -122,11 +155,11 @@ async def _(event):
         await asyncio.sleep(DEL_TIME_OUT)
 
 
-@alpha.on(events.NewMessage(outgoing=True, pattern=".للكروبات(?: |$)(.*)"))
+@client.on(events.NewMessage(outgoing=True, pattern=".للكروبات(?: |$)(.*)"))
 async def gcast(event):
-    alpha = event.pattern_match.group(1)
-    if alpha:
-        msg = alpha
+    client = event.pattern_match.group(1)
+    if client:
+        msg = client
     elif event.is_reply:
         msg = await event.get_reply_message()
     else:
@@ -151,11 +184,11 @@ async def gcast(event):
     )
 
 
-@alpha.on(events.NewMessage(outgoing=True, pattern=".للخاص(?: |$)(.*)"))
+@client.on(events.NewMessage(outgoing=True, pattern=".للخاص(?: |$)(.*)"))
 async def gucast(event):
-    alpha = event.pattern_match.group(1)
-    if alpha:
-        msg = alpha
+    client = event.pattern_match.group(1)
+    if client:
+        msg = client
     elif event.is_reply:
         msg = await event.get_reply_message()
     else:
@@ -179,7 +212,7 @@ async def gucast(event):
         f"**⌔∮  تم بنجاح الأذاعة الى ** `{done}` **من الدردشات ، خطأ في ارسال الى ** `{er}` **من الدردشات**"
     )
 
-@alpha.on(events.NewMessage(outgoing=True, pattern=".تكرار (.*)"))
+@client.on(events.NewMessage(outgoing=True, pattern=".تكرار (.*)"))
 async def spammer(event):
     sandy = await event.get_reply_message()
     cat = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
@@ -224,7 +257,7 @@ async def spam_function(event, sandy, cat, sleeptimem, sleeptimet, DelaySpam=Fal
             pass
             
 
-@alpha.on(events.NewMessage(outgoing=True, pattern=".مؤقت (.*)"))
+@client.on(events.NewMessage(outgoing=True, pattern=".مؤقت (.*)"))
 async def spammer(event):
     reply = await event.get_reply_message()
     input_str = "".join(event.text.split(maxsplit=1)[1:]).split(" ", 2)
@@ -234,11 +267,10 @@ async def spammer(event):
     await spam_function(event, reply, cat, sleeptimem, sleeptimet, DelaySpam=True)
   
  
-@alpha.on(events.NewMessage(outgoing=True, pattern=".اوامر"))
+@client.on(events.NewMessage(outgoing=True, pattern=".اوامر"))
 async def _(event):
       await event.edit(""" 
-----
-❨ Order Telethon (⚖️)𖣫𝘼َِ𝘭 َِ𝙒َِ𝘼َِ𝘻َِ𝙀َِ𝘳َِ/اެݪـۅٛࢪ࣪يَـࢪ⇣˓  1.0 ❩
+❨ Order Telethon Alpha  1.0 ❩
 ---
 
 .فحص
@@ -259,14 +291,14 @@ async def _(event):
 .للكروبات + كلام
 - اكتب الامر مع كلام لعمل اذاعه للكلام للكروبات 
 ----------
-.اسم وقتي
-- يبدأ اسم وقتي
-----------
-.بايو وقتي
-- يبدأ بايو وقتي
-----------
 .ذاتية
 - بالد على صورة ذاتية التدمير لحفظها في الرسائل المحفوظه
+----------
+.ايدي
+- ترد على رسالة اي شخص بكلمة (.ايدي) تطلع لك معلوماتة 
+----------
+.تصفية الكروبات
+- يخرجك من كل الكروبات
 ----------
 .فك المحظورين
 - لالغاء جميع المستخدمين الذي حظرتهم في الخاص
@@ -285,24 +317,31 @@ async def _(event):
 .اسماء ✨
 ===========================
 
-قناه السورس : ( @lllllllll56lllllllll ) .
+قناه السورس : ( @GO_T0 ) .
+
 جميع الاوامر تكون بدايتها نقطة
 
 ===========================
 """)
       
-@alpha.on(events.NewMessage(outgoing=True, pattern=".فحص"))
-async def _(event):
-      await event.edit("""
-𝗔𝗟𝗣𝗛𝗔 userbot
-✦━━━━━━━━✦
-- hi lol (⚖️)𖣫𝘼َِ𝘭 َِ𝙒َِ𝘼َِ𝘻َِ𝙀َِ𝘳َِ/اެݪـۅٛࢪ࣪يَـࢪ⇣˓ userbot
-- 𝗉𝗒𝗍𝗁𝗈𝗇 ⭟ 1.0
-- 𝗈𝗐𝗇𝖾𝗋 ⭟ @llllll56lllllll
-✦━━━━━━━━✦"""
-)
 
-@alpha.on(events.NewMessage(outgoing=True, pattern=".اسماء"))
+@client.on(events.NewMessage(pattern='.فحص'))
+async def send_photo(event):
+    # رابط الصورة التي تريد إرسالها
+    photo_url = 'https://telegra.ph/file/63bbc38fab0eaf1dbe04a.gif'
+    # النص الذي تريد إضافته كتعليق تحت الصورة
+    caption =""" 
+      ‌‎⿻┊Source  ⁂ Alpha
+‌‎⿻┊PyThon ⁂ 3.8 
+‌‎⿻┊‌‎PinG ⁂ : 0.004
+⿻┊‌‎VeRsIoN mastar (1.0) ,
+‌‎⿻┊‌‎TeLeThoN Alpha ⁂ @GO_T0"""
+
+    await client.send_file(event.chat_id, photo_url, caption=caption)
+
+    await event.delete()
+
+@client.on(events.NewMessage(outgoing=True, pattern=".اسماء"))
 async def _(event):
       await event.edit("""
 ✦━━━━━━━━✦
@@ -399,7 +438,7 @@ async def _(event):
 ✦━━━━━━━━✦"""
 )
 
-@alpha.on(events.NewMessage(outgoing=True, pattern=".رموز"))
+@client.on(events.NewMessage(outgoing=True, pattern=".رموز"))
 async def _(event):
       await event.edit("""𓅄 𓅅 𓅆 𓅇 𓅈 𓅉 𓅊 𓅋 𓅌 𓅍 𓅎 𓅏 𓅐 𓅑 𓅒 𓅓 𓅔𓅕 𓅖 𓅗 𓅘 𓅙 𓅚 𓅛 𓅜 𓅝 𓅞 𓅟 𓅠 𓅡 𓅢 𓅣 𓅤 𓅥 𓅦 𓅧 𓅨 𓅩 𓅫 𓅬 𓅭 𓅮 𓅯 𓅰 𓅱 𓅲 𓅳 𓅴 
 𓅵 𓅶 𓅷 𓅸 𓅹 𓅺 𓅻 
@@ -423,7 +462,7 @@ async def _(event):
 ⓫⓬⓭⓮⓯⓰⓱⓲⓳⓴"""
 )
 
-@alpha.on(events.NewMessage(outgoing=True, pattern=".حلويات"))
+@client.on(events.NewMessage(outgoing=True, pattern=".حلويات"))
 async def _(event):
     event = await event.edit("candy")
     deq = deque(list("🍦🍧🍩🍪🎂🍰🧁🍫🍬🍭"))
@@ -434,7 +473,7 @@ async def _(event):
 
 
         
-@alpha.on(events.NewMessage(outgoing=True, pattern=".قمر"))
+@client.on(events.NewMessage(outgoing=True, pattern=".قمر"))
 async def _(event):
     event = await event.edit("قمر")
     deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
@@ -443,7 +482,7 @@ async def _(event):
         await event.edit("".join(deq))
         deq.rotate(1)
         
-@alpha.on(events.NewMessage(outgoing=True, pattern=".قمور"))
+@client.on(events.NewMessage(outgoing=True, pattern=".قمور"))
 async def _(event):
     event = await event.edit("قمور")
     animation_interval = 0.2
@@ -489,62 +528,62 @@ async def _(event):
 
 loop = asyncio.get_event_loop()
 
-async def unblock_users(alpha):
-    @alpha.on(events.NewMessage(outgoing=True, pattern='.فك المحظورين'))
+async def unblock_users(client):
+    @client.on(events.NewMessage(outgoing=True, pattern='.فك المحظورين'))
     async def _(event):
-        list = await alpha(GetBlockedRequest(offset=0, limit=1000000))
+        list = await client(GetBlockedRequest(offset=0, limit=1000000))
         if len(list.blocked) == 0 :
             razan = await event.edit(f'- لم تقم بحظر اي شخص اصلا .')
         else :
             unblocked_count = 1
             for user in list.blocked :
-                UnBlock = await alpha(UnblockRequest(id=int(user.peer_id.user_id)))
+                UnBlock = await client(UnblockRequest(id=int(user.peer_id.user_id)))
                 unblocked_count += 1
                 razan = await event.edit(f'- جار الغاء حظر  {round((unblocked_count * 100) / len(list.blocked), 2)}%')
             unblocked_count = 1
             razan = await event.edit(f'- تم الغاء حظر : {len(list.blocked)}\n\n- تم المستخدمين المحظورين في الخاص بنجاح  .')
 
-@alpha.on(events.NewMessage(outgoing=True, pattern=".ضيف"))
+@client.on(events.NewMessage(outgoing=True, pattern=".ضيف"))
 async def get_users(event):
     legen_ = event.text[10:]
-    alpha_chat = legen_.lower
-    restricted = ["@super_alpha", "@alpha_support"]
-    alpha = await event.edit(f"**جارِ اضأفه الاعضاء من  ** {legen_}")
-    if alpha_chat in restricted:
-        return await alpha.edit(
+    client_chat = legen_.lower
+    restricted = ["@super_client", "@client_support"]
+    client = await event.edit(f"**جارِ اضأفه الاعضاء من  ** {legen_}")
+    if client_chat in restricted:
+        return await client.edit(
             event, "**- لا يمكنك اخذ الاعضاء من مجموعه السورس العب بعيد ابني  :)**"
         )
     sender = await event.get_sender()
     me = await event.client.get_me()
     if not sender.id == me.id:
-        await alpha.edit("**▾∮ تتم العملية انتظر قليلا ...**")
+        await client.edit("**▾∮ تتم العملية انتظر قليلا ...**")
     else:
-        await alpha.edit("**▾∮ تتم العملية انتظر قليلا ...**")
+        await client.edit("**▾∮ تتم العملية انتظر قليلا ...**")
     if event.is_private:
-        return await alpha.edit("- لا يمكنك اضافه الاعضاء هنا")
+        return await client.edit("- لا يمكنك اضافه الاعضاء هنا")
     s = 0
     f = 0
     error = "None"
-    await alpha.edit(
+    await client.edit(
         "**▾∮ حالة الأضافة:**\n\n**▾∮ تتم جمع معلومات المستخدمين 🔄 ...⏣**"
     )
     async for user in event.client.iter_participants(event.pattern_match.group(1)):
         try:
             if error.startswith("Too"):
-                return await alpha.edit(
+                return await client.edit(
                     f"**حالة الأضافة انتهت مع الأخطاء**\n- (**ربما هنالك ضغط على الأمر حاول مجددا لاحقا **) \n**الخطأ** : \n`{error}`\n\n• اضافة `{s}` \n• خطأ بأضافة `{f}`"
                 )
             tol = f"@{user.username}"
             lol = tol.split("`")
-            await alpha(InviteToChannelRequest(channel=event.chat_id, users=lol))
+            await client(InviteToChannelRequest(channel=event.chat_id, users=lol))
             s = s + 1
-            await alpha.edit(
+            await client.edit(
                 f"**▾∮تتم الأضافة **\n\n• اضيف `{s}` \n•  خطأ بأضافة `{f}` \n\n**× اخر خطأ:** `{error}`"
             )
         except Exception as e:
             error = str(e)
             f = f + 1
-    return await alpha.edit(
+    return await client.edit(
         f"**▾∮اڪتملت الأضافة ✅** \n\n• تم بنجاح اضافة `{s}` \n• خطأ بأضافة `{f}`"
     )
     
@@ -577,7 +616,7 @@ async def send_prayer():
 #يوزر القناة او الكروب او الحساب الي تريد.تدزله اليوزر وي @ .
     await client.send_message('@lS0S0l', 
                               random.choice(list(phrases)))
-@alpha.on(events.NewMessage(pattern='.تفعيل الاذكار'))
+@client.on(events.NewMessage(pattern='.تفعيل الاذكار'))
 async def start(event):
     await event.reply("""تم تفعيل الاذكار .
 الان الحساب سوف يرسل اذكار كل 10 دقائق .""")
@@ -585,7 +624,7 @@ async def start(event):
         await send_prayer()
         await asyncio.sleep(random.choices(list(phrase_frequencies.values()))[0])
 
-@alpha.on(events.NewMessage(pattern='.تعطيل الاذكار'))
+@client.on(events.NewMessage(pattern='.تعطيل الاذكار'))
 async def stop(event):
     await event.reply('تم تعطيل الاذكار .')
     quit()
@@ -601,8 +640,32 @@ print("""
 
 .
     """)
+    
 
 
-alpha.loop.create_task(join_channel())
-loop.create_task(unblock_users(alpha))
-alpha.run_until_disconnected()
+@client.on(events.NewMessage(outgoing=True, pattern=".اسم وقتي"))
+async def update_time():
+    while True:
+        # الحصول على الوقت الحالي بتوقيت مكة المكرمة
+        now = datetime.now(makkah_tz)
+        time_str = now.strftime('%I:%M')  # تنسيق الوقت
+        # تحديث الاسم الأول بالوقت الحالي
+        try:
+            await client(functions.account.UpdateProfileRequest(
+                first_name=time_str
+            ))
+            print(f'Updated name to {time_str}')
+        except FloodWaitError as ex:
+            print(f'Flood wait error: {ex.seconds}')
+            await asyncio.sleep(ex.seconds)
+        # الانتظار لمدة دقيقة قبل التحديث مرة أخرى
+        await asyncio.sleep(30)
+
+with client:
+    client.loop.run_until_complete(update_time())
+
+
+client.loop.run_until_complete(update_time())
+client.loop.create_task(join_channel())
+loop.create_task(unblock_users(client))
+client.run_until_disconnected()
