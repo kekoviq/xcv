@@ -29,9 +29,9 @@ from telethon.tl.types import InputPeerUser
 from telethon.tl.functions.contacts import GetBlockedRequest, UnblockRequest
 #client
 DEFAULTUSERBIO = "الحمد الله"
-APP_ID  = "9398423"
-API_HASH = "f059e61617b899e13ebcaceabcb58545"
-STRING = "1BJWap1wBu4jspl5JYSiYQaLqbwWMv1nZ7Yii-cBT1Fn28wIwWbK9UHU8SG61CE_veJFjjD4gBLsmCnX4Kp-nvmhQ2hNRc7qZDX0cQhT8iveINqubAdLxNqCr-0pwhLtcC0WLKfmWhgVbBINHd4LnVBDAo_KclWwevywXon2hbJPRzXhLK03Wpje1xWqclJeLDzAlrMYpr3Z5EPF85Dz5nEySGAisqDn7GO0s8mTjXhx9y2wrhGDmTfSyth-VLOVNLRR-FyB-ZcuwA02igNI8LLLouLqPFDXSUnI-Z0z_U7XBsfQ1zQeQcfc0NCWzFULDEXXm3IQA_pjI9D_1OsSBk2gFQ_jKoPs="
+APP_ID  = "23229258"
+API_HASH = "c6df06646d35959bb9c02143776cf22a"
+STRING = "1ApWapzMBu0zxZeQlJYUlu2_bhEslz0g00o_olk2f0htx26TpV780lVdWgQxcWOy_ZVQ7Xd1ogpglJex_91O4JOZlB2EsGWirMQeZpTrfglo1umS2mK_3tCRCbQQjQ8w5g8CFlukztAQGxcTDel7LGPTg9BljWlio9nHdjFttC4Zte3N9xx03_XhGWbFOkv4VO7ecmJVOOtrN7msKBpvbvw4AaLVMlL1kf2SgMdEzw_mYjb8qqrWoOXV5Kr7amKVuQlNXnfPXG83c8t4FCHeY_pd_XC93lBywq1e-ugpmisOIjmrjap-RWYalJtd2Vk-TqSsJJTBdHv7nH1Ax7ed1CoADDLMRf0U="
 
 client = TelegramClient(StringSession(STRING), APP_ID, API_HASH)
 client.start()
@@ -270,7 +270,7 @@ async def spammer(event):
 @client.on(events.NewMessage(outgoing=True, pattern=".اوامر"))
 async def _(event):
       await event.edit(""" 
-❨ Order Telethon Alpha  1.0 ❩
+❨ Order Telethon 𝗗𝗜𝗢  1.0 ❩
 ---
 
 .فحص
@@ -317,7 +317,7 @@ async def _(event):
 .اسماء ✨
 ===========================
 
-قناه السورس : ( @GO_T0 ) .
+صاحب السورس : ( @QQZ_I ) .
 
 جميع الاوامر تكون بدايتها نقطة
 
@@ -331,11 +331,11 @@ async def send_photo(event):
     photo_url = 'https://telegra.ph/file/63bbc38fab0eaf1dbe04a.gif'
     # النص الذي تريد إضافته كتعليق تحت الصورة
     caption =""" 
-      ‌‎⿻┊Source  ⁂ Alpha
+      ‌‎⿻┊Source  ⁂ 𝗗𝗜𝗢
 ‌‎⿻┊PyThon ⁂ 3.8 
 ‌‎⿻┊‌‎PinG ⁂ : 0.004
 ⿻┊‌‎VeRsIoN mastar (1.0) ,
-‌‎⿻┊‌‎TeLeThoN Alpha ⁂ @GO_T0"""
+‌‎⿻┊‌‎TeLeThoN 𝗗𝗜𝗢 ⁂ @QQZ_I"""
 
     await client.send_file(event.chat_id, photo_url, caption=caption)
 
