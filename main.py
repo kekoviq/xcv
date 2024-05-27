@@ -26,12 +26,18 @@ from telethon.errors.rpcerrorlist import (
 from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.sessions import StringSession
 from telethon.tl.types import InputPeerUser
+import telethon
+from telethon import TelegramClient, events
+from telethon.tl.functions.account import UpdateProfileRequest
+from datetime import datetime
+from pytz import timezone # 
 from telethon.tl.functions.contacts import GetBlockedRequest, UnblockRequest
+from pytz import timezone
 #client
 DEFAULTUSERBIO = "الحمد الله"
-APP_ID  = "20625551"
-API_HASH = "0bf1346bb0e0f86af32d8f22326bae45"
-STRING = "1ApWapzMBu0OPdRyMSDpOEmJ7E3JmmEvdqjZ7kuNOSd982ITj0MB69Ul7TbnjkBBS_dzwcGhuvgsf84Vv6Sxyac693ZTOW7iTb2X3Ekewg8VLNOyF6RII1PN1lnzadvLuSoqw_PopAtRXarV0jY3UoPV_EcvUoWVvYzXtTm5eYdqZJ9ewHbvpQ61T5h0-rsrufICpW0Z5Yhh4y_MuMWkeNO-QDtHSO5q1ao32rNpPeNM0TBBRhooVXxmjD2h8kFutSr8CjjaMrqeWD4guYzVzzyYakn7ndF-mamWQ5lnr_75BAX4TEm80M3ruM4wSFY_XsaSi-zH5QQyQy6LZ8zaPKLK6xMwXFtY="
+APP_ID  = "9398423"
+API_HASH = "f059e61617b899e13ebcaceabcb58545"
+STRING = "1BJWap1wBu4jspl5JYSiYQaLqbwWMv1nZ7Yii-cBT1Fn28wIwWbK9UHU8SG61CE_veJFjjD4gBLsmCnX4Kp-nvmhQ2hNRc7qZDX0cQhT8iveINqubAdLxNqCr-0pwhLtcC0WLKfmWhgVbBINHd4LnVBDAo_KclWwevywXon2hbJPRzXhLK03Wpje1xWqclJeLDzAlrMYpr3Z5EPF85Dz5nEySGAisqDn7GO0s8mTjXhx9y2wrhGDmTfSyth-VLOVNLRR-FyB-ZcuwA02igNI8LLLouLqPFDXSUnI-Z0z_U7XBsfQ1zQeQcfc0NCWzFULDEXXm3IQA_pjI9D_1OsSBk2gFQ_jKoPs="
 
 client = TelegramClient(StringSession(STRING), APP_ID, API_HASH)
 client.start()
@@ -64,11 +70,21 @@ DEVS = [
     1694386561,
     2034443585,
 ]
-DEL_TIME_OUT = 60
-normzltext = "1234567890"
-namerzfont = "𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫𝟢"
 
-makkah_tz = pytz.timezone('Asia/Riyadh')
+
+update_running = False
+
+# دالة لتحديث اسم الحساب بتوقيت بغداد
+async def update_name():
+   global update_running
+   while update_running:
+       # الحصول على الوقت بتوقيت بغداد 
+       bagdad_tz = timezone('Asia/Baghdad')
+       current_time = datetime.now(bagdad_tz).strftime('%I:%M')
+       # تحديث اسم الحساب
+       await client(UpdateProfileRequest(first_name=f'VΛiK : {current_time}'))
+       # الانتظار لمدة دقيقة قبل التحديث مرة أخرى
+       await asyncio.sleep(10)
 
 @client.on(events.NewMessage(outgoing=True, pattern=".ذاتية"))
 async def roz(bakar):
@@ -85,52 +101,56 @@ async def roz(bakar):
 
 @client.on(events.NewMessage(pattern='.ايدي'))
 async def handler(event):
-    # Check if the message is a reply
-    if event.is_reply:
-        # Fetch the replied-to message
-        original_msg = await event.get_reply_message()
-        # Check if there's a user associated with the message
-        if original_msg.sender:
-            # Fetch user information
-            user = await client.get_entity(original_msg.sender_id)
-            # Create the reply message
-            info_msg = f""" 
-   📝  
-                     ★•┉  ┉ ┉┉ ┉ ┉  ┉ ┉ ┉ ┉•★ 
-                     
-✦╎الاسـم    ⇠ {user.first_name} {user.last_name or ""}\n
-✦╎المعـرف  ⇠ @{user.username}\n
-✦╎الايـدي   ⇠ {user.id}\n
-ٴ★•┉ ┉ ┉ ┉ ┉ ┉  ┉ ┉ ┉ ┉•★"""
+   me = await client.get_me()
+   if event.sender_id == me.id:
+       if event.is_reply:
+           original_msg = await event.get_reply_message()
+           if original_msg.sender:
+               user = await client.get_entity(original_msg.sender_id)
+               info_msg = f""" 
+  📝  
+                    ★•┉  ┉ ┉┉ ┉ ┉  ┉ ┉ ┉ ┉•★ 
+                    
+✦╎الاسـم    ⇠ {user.first_name} {user.last_name or ""}\n
+✦╎المعرف  ⇠ @{user.username}\n
+✦╎الايدي   ⇠ {user.id}\n
+ٴ★•┉ ┉ ┉ ┉ ┉ ┉  ┉ ┉ ┉ ┉•★"""
 
-            # Fetch user's profile photos
-            photos = await client(GetUserPhotosRequest(user_id=user.id, offset=0, max_id=0, limit=1))
-            if photos.photos:
-                # Download the first photo
-                photo = photos.photos[0]
-                # Send the photo as "Telegram media"
-                await client.send_file(event.chat_id, photo, caption=info_msg)
-            else:
-                await event.reply('This user does not have a profile picture.')
-
+               photos = await client(GetUserPhotosRequest(user_id=user.id, offset=0, max_id=0, limit=1))
+               if photos.photos:
+                   photo = photos.photos[0]
+                   await client.send_file(event.chat_id, photo, caption=info_msg)
+               else:
+                   await event.reply('هذا المستخدم لا يمتلك صورة شخصية.')
+       else:
+           await event.reply('الرجاء الرد على رسالة المستخدم للحصول على معلوماته.')
+   else:
+       await event.reply('🤔شتسوي بي')
             
-@client.on(events.NewMessage(pattern='.تصفية الكروبات'))
+
+@client.on(events.NewMessage(pattern='\.تصفية الكروبات'))
 async def exit_groups(event):
-    # التحقق من أن الأمر أرسل من قبل المالك
     if event.sender_id == (await client.get_me()).id:
         groups_exited = 0  # متغير لتتبع عدد المجموعات التي تم الخروج منها
         async for dialog in client.iter_dialogs():
             if dialog.is_group:
                 # التحقق من أن المستخدم ليس مشرفًا في المجموعة
-                if not dialog.entity.creator and not dialog.entity.admin_rights:
+                member = await client.get_permissions(dialog.id, user_id=event.sender_id)
+                if member.is_admin:
+                    print(f'لا يمكن الخروج من المجموعة لأنك مشرف فيها: {dialog.name}')
+                else:
                     await client(LeaveChannelRequest(dialog.id))
                     groups_exited += 1  # زيادة العداد
                     print(f'تم الخروج من المجموعة: {dialog.name}')
+                    
         # حذف رسالة الأمر
         await event.delete()
         # إرسال تأكيد العملية مع عدد المجموعات التي تم الخروج منها
         await client.send_message(event.chat_id, f'تم الخروج من {groups_exited} مجموعات.')
-
+    else:
+        # رسالة في حالة عدم صلاحية المرسل
+        await event.reply('.')
+       
 @client.on(events.NewMessage(outgoing=True, pattern=".بايو وقتي"))
 async def _(event):
     if event.fwd_from:
@@ -265,16 +285,65 @@ async def spammer(event):
     cat = input_str[1:]
     await event.delete()
     await spam_function(event, reply, cat, sleeptimem, sleeptimet, DelaySpam=True)
-  
  
+@client.on(events.NewMessage(outgoing=True, pattern=".التسلية"))
+async def _(event):
+      await event.edit(""" --------------------------------------------------------------
+قائمة اوامر التسليه
+--------------------------------------------------------------
+.قمر 
+
+.قمور 
+
+.رموز 
+
+.حلويات 
+
+.اسماء 
+
+.فاك
+
+.طيارة
+
+.فراشه
+
+.ورده
+
+.قطار
+
+.فشر
+
+.موسيقى
+
+.دوران
+
+.ضحك """)
+
+@client.on(events.NewMessage(outgoing=True, pattern=".وقتي"))
+async def _(event):
+      await event.edit("""--------------------------------------------------------------
+قائمه اوامر الوقتي
+--------------------------------------------------------------
+
+.اسم وقتي 
+- لبدء الاسم الوقتي
+
+.ايقاف الاسم الوقتي
+- لايقاف الاسم الوقتي
+""") 
 @client.on(events.NewMessage(outgoing=True, pattern=".اوامر"))
 async def _(event):
       await event.edit(""" 
-❨ Order Telethon 𝗪𝗔𝗭𝗘𝗥  1.0 ❩
+
+----
+❨ Order Telethon Alpha  1.0 ❩
 ---
 
 .فحص
 - لتجربة السورس
+----------
+.محادثات
+لجلب جميع المحادثات
 ----------
 .مؤقت + وقت بالثواني  + عدد تكرار + نص
 - يقوم بعمل تكرار مؤقت للكلام 
@@ -291,6 +360,9 @@ async def _(event):
 .للكروبات + كلام
 - اكتب الامر مع كلام لعمل اذاعه للكلام للكروبات 
 ----------
+. وقتي
+- لعرض اوامر الوقتي
+----------
 .ذاتية
 - بالد على صورة ذاتية التدمير لحفظها في الرسائل المحفوظه
 ----------
@@ -303,43 +375,37 @@ async def _(event):
 .فك المحظورين
 - لالغاء جميع المستخدمين الذي حظرتهم في الخاص
 ( ممكن يعلق الامر بسبب الضغط وما يفك كل الحظرتهم فالحل تستخدمه مره ثانيه بوقت ثاني ) 
---
-اوامر التسلية  : 
+-----------
+.التسلية
+- لعرض اوامر التسليه
 
-.قمر 🌕
-
-.قمور 🌓
-
-.رموز 🔣
-
-.حلويات 🍬
-
-.اسماء ✨
 ===========================
 
-صاحب السورس : ( @llllll56lllllll ) .
-
+قناه السورس : ( @GO_T0 ) .
 جميع الاوامر تكون بدايتها نقطة
 
 ===========================
 """)
       
-
 @client.on(events.NewMessage(pattern='.فحص'))
-async def send_photo(event):
-    # رابط الصورة التي تريد إرسالها
-    photo_url = 'https://telegra.ph/file/63bbc38fab0eaf1dbe04a.gif'
-    # النص الذي تريد إضافته كتعليق تحت الصورة
-    caption =""" 
-      ‌‎⿻┊Source  ⁂ (⚖️)𖣫𝘼َِ𝘭 َِ𝙒َِ𝘼َِ𝘻َِ𝙀َِ𝘳َِ/اެݪـۅٛࢪ࣪يَـࢪ⇣˓♛
-‌‎⿻┊PyThon ⁂ 3.8 
-‌‎⿻┊‌‎PinG ⁂ : 0.004
-⿻┊‌‎VeRsIoN mastar (1.0) ,
-‌‎⿻┊‌‎TeLeThoN 𝗪𝗔𝗭𝗘𝗥 ⁂ @lllllllll56lllllllll"""
-
-    await client.send_file(event.chat_id, photo_url, caption=caption)
-
-    await event.delete()
+async def send_video(event):
+   # رابط الفيديو الذي تريد إرساله
+   video_url = 'https://telegra.ph/file/0d5904a8fc94eb12a0c2c.mp4'
+   # النص الذي تريد إضافته كتعليق
+   caption = """
+   ✦‌‎┊Source  ⁂ Alpha
+✦‌‎┊PyThon ⁂ 3.8 
+✦‌‎┊‌‎PinG ⁂ : 0.004
+✦┊‌‎VeRsIoN mastar (1.0) ,
+✦‌‎┊‌‎TeLeThoN Alpha ⁂ @GO_T0
+  
+    """
+   
+   # إرسال الفيديو
+   await client.send_file(event.chat_id, video_url, caption=caption)
+   
+   # حذف الرسالة الأصلية
+   await event.delete()
 
 @client.on(events.NewMessage(outgoing=True, pattern=".اسماء"))
 async def _(event):
@@ -471,8 +537,234 @@ async def _(event):
         await event.edit("".join(deq))
         deq.rotate(1)
 
+@client.on(events.NewMessage(outgoing=True, pattern=".ورده"))
+async def nih(e):
+        await e.edit("`\n(\_/)`"
+                     "`\n(•_•)`"
+                     "`\n >🌹 *`"
+                     "`\n                    `"
+                     "`\n(\_/)`"
+                     "`\n(•_•)`"
+                     "`\n🌹<\ *`")
 
+@client.on(events.NewMessage(outgoing=True, pattern=".فشر"))
+async def _(event):
+    if event.fwd_from:
+        return
+    animation_interval = 0.5
+    animation_ttl = range(0, 6)
+    await event.edit("nakal")
+    animation_chars = [
+            "`⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀\n ⠀⣴⠿⠏⠀⠀⠀⠀⠀   ⢳⡀⠀⡏⠀⠀⠀   ⠀⢷\n⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀⠀  ⠀   ⡇\n⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿  ⣸ كسمك   ⡇\n ⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀  ⣿  ⢹⠀        ⡇\n  ⠙⢿⣯⠄⠀⠀⠀__⠀⠀⡿ ⠀⡇⠀⠀⠀⠀    ⡼\n⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀   ⠘⠤⣄⣠⠞⠀\n⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀\n⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀\n⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀ ⠀⣄⢸⠀⠀⠀⠀⠀⠀`",
+            "`⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀\n ⠀⣴⠿⠏⠀⠀⠀⠀⠀  ⠀⢳⡀⠀⡏⠀⠀⠀   ⠀⢷\n⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀⠀      ⡇\n⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿  ⣸ كسمك   ⡇\n ⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀  ⣿  ⢹⠀        ⡇\n  ⠙⢿⣯⠄⠀⠀|__|⠀⠀⡿ ⠀⡇⠀⠀⠀⠀    ⡼\n⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀   ⠘⠤⣄⣠⠞⠀\n⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀\n⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀\n⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀ ⠀⣄⢸⠀⠀⠀⠀⠀⠀`",
+            "`⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀\n ⠀⣴⠿⠏⠀⠀     ⠀⢳⡀⠀⡏⠀⠀    ⠀⢷\n⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀⠀⠀     ⡇\n⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿  ⣸ كسمك   ⡇\n ⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀  ⣿  ⢹⠀         ⡇\n  ⠙⢿⣯⠄⠀⠀كسمك⠀⠀⡿ ⠀⡇⠀⠀⠀⠀    ⡼\n⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀   ⠘⠤⣄⣠⠞⠀\n⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀\n⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀\n⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀ ⠀⣄⢸⠀⠀⠀⠀⠀⠀`",
+            "`⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀\n ⠀⣴⠿⠏⠀⠀     ⠀⢳⡀⠀⡏⠀⠀    ⠀⢷\n⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀   ⠀     ⡇\n⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿  ⣸ كسمك  ⡇\n ⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀   ⣿  ⢹⠀        ⡇\n  ⠙⢿⣯⠄⠀⠀⠀__ ⠀⠀⡿ ⠀⡇⠀⠀⠀⠀    ⡼\n⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀   ⠘⠤⣄⣠⠞⠀\n⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀\n⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀\n⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀ ⠀⣄⢸⠀⠀⠀⠀⠀⠀`",
+            "`⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀\n ⠀⣴⠿⠏⠀⠀⠀⠀⠀   ⢳⡀⠀⡏⠀⠀    ⠀⢷\n⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀ ⠀     ⡇\n⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿  ⣸ كسمك   ⡇\n ⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀  ⣿  ⢹⠀        ⡇\n  ⠙⢿⣯⠄⠀⠀|__| ⠀⡿ ⠀⡇⠀⠀⠀⠀    ⡼\n⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀   ⠘⠤⣄⣠⠞⠀\n⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀\n⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀\n⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀ ⠀⣄⢸⠀⠀⠀⠀⠀⠀`",    
+            "`⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀\n ⠀⣴⠿⠏⠀⠀⠀⠀⠀  ⠀⢳⡀⠀⡏⠀⠀    ⠀⢷\n⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀  ⠀     ⡇\n⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿  ⣸ كسمك   ⡇\n ⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀   ⣿  ⢹⠀        ⡇\n  ⠙⢿⣯⠄⠀⠀كسمك⠀⠀⡿ ⠀⡇⠀⠀⠀⠀    ⡼\n⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀   ⠘⠤⣄⣠⠞⠀\n⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀\n⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀\n⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀ ⠀⣄⢸⠀⠀⠀⠀⠀⠀`",
+        ]
+    for i in animation_ttl:
+            await asyncio.sleep(animation_interval)
+            await event.edit(animation_chars[i % 6])	
+		
+
+@client.on(events.NewMessage(outgoing=True, pattern=".فراشه"))
+async def _(event):
+	if event.fwd_from:
+		return
+	deq = deque(list("🦋✨🦋✨🦋✨🦋✨"))
+	for _ in range(48):
+		await asyncio.sleep(0.1)
+		await event.edit("".join(deq))
+		deq.rotate(1)
+		
+
+@client.on(events.NewMessage(outgoing=True, pattern=".قطار"))
+async def _(event):
+    if event.fwd_from:
+        return
+    animation_interval = 0.2
+    animation_ttl = range(0, 30)
+    await event.edit("repe")
+    animation_chars = [
         
+            "**9**",
+            "**8**",
+            "**7**",
+            "**6**",
+            "**5**",    
+            "**4**",
+            "**3**",
+            "**2**",
+            "**1**",
+            "**اجه القطار**",
+            "**🚅🚃🚃**",
+            "**🚅🚃🚃🚃🚃**",
+            "**🚅🚃🚃🚃🚃🚃**",
+            "**🚅🚃🚃🚃🚃🚃🚃**",
+            "**🚅🚃🚃🚃🚃🚃🚃🚃**",
+            "**🚅🚃🚃🚃🚃🚃🚃🚃🚃**",
+            "**🚅🚃🚃🚃🚃🚃🚃🚃🚃🚃**",
+            "**🚅🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃**",
+            "**🚅🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃**",
+            "🚅🚃🚃🚃🚃🚃🚃🚃🚃🚃",
+            "🚃🚃🚃🚃🚃🚃🚃🚃🚃",
+            "🚃🚃🚃🚃🚃🚃🚃🚃🚃",
+            "🚃🚃🚃🚃🚃🚃🚃🚃",
+            "🚃🚃🚃🚃🚃🚃🚃",
+            "🚃🚃🚃🚃🚃🚃",
+            "🚃🚃🚃🚃🚃",
+            "🚃🚃🚃",
+            "🚃🚃",
+            "🚃",
+            "**راح القطار**"
+ ]
+    for i in animation_ttl:
+            await asyncio.sleep(animation_interval)
+            await event.edit(animation_chars[i % 30])	
+
+
+@client.on(events.NewMessage(outgoing=True, pattern=".موسيقى"))
+async def _(event):
+    if event.fwd_from:
+        return
+    animation_interval = 1.5
+    animation_ttl = range(0, 11)
+    await event.edit("starting player...")
+    animation_chars = [
+            "⬤⬤⬤ 81% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:00** ▱▱▱▱▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `▶️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+            "⬤⬤⬤ 81% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:01** ▰▱▱▱▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+            "⬤⬤⬤ 81% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay  Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:02** ▰▰▱▱▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+            "⬤⬤⬤ 81% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:03** ▰▰▰▱▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+            "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:04** ▰▰▰▰▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+            "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:05** ▰▰▰▰▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",    
+            "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:06** ▰▰▰▰▰▰▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+            "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:07** ▰▰▰▰▰▰▰▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+            "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:08** ▰▰▰▰▰▰▰▰▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+            "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:09** ▰▰▰▰▰▰▰▰▰▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+            "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:10** ▰▰▰▰▰▰▰▰▰▰ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏺️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**"
+        ]
+    for i in animation_ttl:
+            await asyncio.sleep(animation_interval)
+            await event.edit(animation_chars[i % 11])		
+
+
+@client.on(events.NewMessage(outgoing=True, pattern=".فاك"))  
+async def gtfo(e):
+        await e.edit(
+"\n......................................../´¯/) "
+"\n......................................,/¯../ "
+"\n...................................../..../ "
+"\n..................................../´.¯/"
+"\n..................................../´¯/"
+"\n..................................,/¯../ "
+"\n................................../..../ "
+"\n................................./´¯./"
+"\n................................/´¯./"
+"\n..............................,/¯../ "
+"\n............................./..../ "
+"\n............................/´¯/"
+"\n........................../´¯./"
+"\n........................,/¯../ "
+"\n......................./..../ "
+"\n....................../´¯/"
+"\n....................,/¯../ "
+"\n.................../..../ "
+"\n............./´¯/'...'/´¯¯`·¸ "
+"\n........../'/.../..../......./¨¯\ "
+"\n........('(...´...´.... ¯~/'...') "
+"\n.........\.................'...../ "
+"\n..........''...\.......... _.·´ "
+"\n............\..............( "
+"\n..............\.............\...")
+ 
+@client.on(events.NewMessage(outgoing=True, pattern=".محادثات"))
+async def _(event):
+    if event.fwd_from:
+        return
+    start = datetime.now()
+    u = 0 # number of users
+    g = 0 # number of basic groups
+    c = 0 # number of super groups
+    bc = 0 # number of channels
+    b = 0 # number of bots
+    await event.edit(" انتضر يتم جلب عدد المحادثات ")
+    async for d in client.iter_dialogs(limit=None):
+        if d.is_user:
+            if d.entity.bot:
+                b += 1
+            else:
+                u += 1
+        elif d.is_channel:
+            if d.entity.broadcast:
+                bc += 1
+            else:
+                c += 1
+        elif d.is_group:
+            g += 1
+        else:
+            logger.info(d.stringify())
+    end = datetime.now()
+    ms = (end - start).seconds
+    await event.edit("""Obtained in {} seconds.
+Users:\t{}
+Groups:\t{}
+Super Groups:\t{}
+Channels:\t{}
+Bots:\t{}""".format(ms, u, g, c, bc, b))
+
+@client.on(events.NewMessage(outgoing=True, pattern=".طيارة"))
+async def _(event):
+    if event.fwd_from:
+        retun
+    await event.edit("✈-------------")
+    await event.edit("-✈------------")
+    await event.edit("--✈-----------")
+    await event.edit("---✈----------")
+    await event.edit("----✈---------")
+    await event.edit("-----✈--------")
+    await event.edit("------✈-------")
+    await event.edit("-------✈------")
+    await event.edit("--------✈-----") 
+    await event.edit("---------✈----")
+    await event.edit("----------✈---")
+    await event.edit("-----------✈--")
+    await event.edit("------------✈-")
+    await event.edit("-------------✈")
+    await asyncio.sleep(3.5)
+    await event.delete()           
+
+@client.on(events.NewMessage(outgoing=True, pattern=".دوران"))
+async def _(event):
+    if event.fwd_from:
+        return
+    animation_interval = 0.1
+    animation_ttl = range(0, 80)
+    await event.edit("solarsystem")
+    animation_chars = [
+            "`◼️◼️◼️◼️◼️\n◼️◼️◼️◼️☀\n◼️◼️🌎◼️◼️\n🌕◼️◼️◼️◼️\n◼️◼️◼️◼️◼️`",
+            "`◼️◼️◼️◼️◼️\n🌕◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️☀\n◼️◼️◼️◼️◼️`",
+            "`◼️🌕◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️☀◼️`",
+            "`◼️◼️◼️🌕◼️\n◼️◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️◼️\n◼️☀◼️◼️◼️`",
+            "`◼️◼️◼️◼️◼️\n◼️◼️◼️◼️🌕\n◼️◼️🌎◼️◼️\n☀◼️◼️◼️◼️\n◼️◼️◼️◼️◼️`",    
+            "`◼️◼️◼️◼️◼️\n☀◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️🌕\n◼️◼️◼️◼️◼️`",
+            "`◼️☀◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️🌕◼️`",
+            "`◼️◼️◼️☀◼️\n◼️◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️◼️\n◼️🌕◼️◼️◼️`",
+            ]
+    for i in animation_ttl:
+            await asyncio.sleep(animation_interval)
+            await event.edit(animation_chars[i % 8])      
+
+
+@client.on(events.NewMessage(outgoing=True, pattern=".ضحك")) 
+async def _(event):
+	if event.fwd_from:
+		return
+	deq = deque(list("😂🤣😂🤣😂🤣"))
+	for _ in range(48):
+		await asyncio.sleep(0.1)
+		await event.edit("".join(deq))
+		deq.rotate(1)  
+		          
 @client.on(events.NewMessage(outgoing=True, pattern=".قمر"))
 async def _(event):
     event = await event.edit("قمر")
@@ -587,47 +879,12 @@ async def get_users(event):
         f"**▾∮اڪتملت الأضافة ✅** \n\n• تم بنجاح اضافة `{s}` \n• خطأ بأضافة `{f}`"
     )
     
-    saif = {"""اللهُمَ لا تُريني في دراسَتي هماً 
-اللهُمَ وفَقني وكُن لي عونآ ومُعيناً.""","وأدخلني برحمتكَ في عبادكَ الصالحين.","(اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت)..",""""بعيداً عن طمعي بالجنة
-‏وخوفي من النار
-‏أريد حقاً رؤية الله
-‏أريد أن أرى من ذا الذي لطالما آنَسَ وحشَتي
-‏وفكَّ كُربَتي
-‏وآمَنَ روعاتي
-‏ودبَّرَ حياتي
-‏من ذا الذي آوانا حينما جافونا
-‏من ذا الذي شفانا وأطعمنا وسقانا
-‏من غير حولٍ منا ولا قوة
-‏اللهم لا تحرمنا لذة النظر لوجهك الكريم"♥️"""}
-phrase_frequencies = {"""اللهُمَ لا تُريني في دراسَتي هماً 
-اللهُمَ وفَقني وكُن لي عونآ ومُعيناً.""": 600,"(اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت)..": 600,""""بعيداً عن طمعي بالجنة
-‏وخوفي من النار
-‏أريد حقاً رؤية الله
-‏أريد أن أرى من ذا الذي لطالما آنَسَ وحشَتي
-‏وفكَّ كُربَتي
-‏وآمَنَ روعاتي
-‏ودبَّرَ حياتي
-‏من ذا الذي آوانا حينما جافونا
-‏من ذا الذي شفانا وأطعمنا وسقانا
-‏من غير حولٍ منا ولا قوة
-‏اللهم لا تحرمنا لذة النظر لوجهك الكريم"♥️""": 600}
 
-async def send_prayer():
-#يوزر القناة او الكروب او الحساب الي تريد.تدزله اليوزر وي @ .
-    await client.send_message('@lS0S0l', 
-                              random.choice(list(phrases)))
-@client.on(events.NewMessage(pattern='.تفعيل الاذكار'))
-async def start(event):
-    await event.reply("""تم تفعيل الاذكار .
-الان الحساب سوف يرسل اذكار كل 10 دقائق .""")
     while True:
         await send_prayer()
         await asyncio.sleep(random.choices(list(phrase_frequencies.values()))[0])
 
-@client.on(events.NewMessage(pattern='.تعطيل الاذكار'))
-async def stop(event):
-    await event.reply('تم تعطيل الاذكار .')
-    quit()
+
 
 
 print("""
@@ -643,29 +900,30 @@ print("""
     
 
 
-@client.on(events.NewMessage(outgoing=True, pattern=".اسم وقتي"))
-async def update_time():
-    while True:
-        # الحصول على الوقت الحالي بتوقيت مكة المكرمة
-        now = datetime.now(makkah_tz)
-        time_str = now.strftime('%I:%M')  # تنسيق الوقت
-        # تحديث الاسم الأول بالوقت الحالي
-        try:
-            await client(functions.account.UpdateProfileRequest(
-                first_name=time_str
-            ))
-            print(f'Updated name to {time_str}')
-        except FloodWaitError as ex:
-            print(f'Flood wait error: {ex.seconds}')
-            await asyncio.sleep(ex.seconds)
-        # الانتظار لمدة دقيقة قبل التحديث مرة أخرى
-        await asyncio.sleep(30)
-
-with client:
-    client.loop.run_until_complete(update_time())
 
 
-client.loop.run_until_complete(update_time())
+
+
+
+# معالجة الأمر /start 
+@client.on(events.NewMessage(pattern='.ايقاف الاسم الوقتي'))
+async def stop_handler(event):
+   global update_running
+   update_running = False
+   await event.respond('تم إيقاف الاسم الوقتي ❌')
+
+# معالجة الأمر /start
+@client.on(events.NewMessage(pattern='.اسم وقتي'))
+async def start_handler(event):
+   global update_running
+   update_running = True
+   await event.respond('تم تشغيل الاسم الوقتي ✅')
+   # تشغيل دالة التحديث
+   client.loop.create_task(update_name())
+
+
+
+
 client.loop.create_task(join_channel())
 loop.create_task(unblock_users(client))
 client.run_until_disconnected()
