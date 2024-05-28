@@ -84,7 +84,7 @@ async def update_name():
        # تحديث اسم الحساب
        await client(UpdateProfileRequest(first_name=f'{current_time}'))
        # الانتظار لمدة دقيقة قبل التحديث مرة أخرى
-       await asyncio.sleep(30)
+       await asyncio.sleep(5)
 
 @client.on(events.NewMessage(outgoing=True, pattern=".ذاتية"))
 async def roz(bakar):
