@@ -99,36 +99,9 @@ async def roz(bakar):
     )
     await bakar.delete()
 
-#@client.on(events.NewMessage(pattern='.ايدي'))⁰
-#async def handler(event):
-  # me = await client.get_me()
- #  if event.sender_id == me.id:
-    #   if event.is_reply:
-  #         original_msg = await event.get_reply_message()
-    #       if original_msg.sender:
-#    $           user = await client.get_entity(original_msg.sender_id)
-#               info_msg = f""" 
-#  📝  
-                    ★•┉  ┉ ┉┉ ┉ ┉  ┉ ┉ ┉ ┉•★ 
-                    
-#✦╎الاسـم    ⇠ {user.first_name} {user.last_name or ""}\n
-#✦╎المعرف  ⇠ @{user.username}\n
-#✦╎الايدي   ⇠ {user.id}\n
-#ٴ★•┉ ┉ ┉ ┉ ┉ ┉  ┉ ┉ ┉ ┉•★"""
 
-   #            photos = await client(GetUserPhotosRequest(user_id=user.id, offset=0, max_id=0, limit=1))
-   #            if photos.photos:
-  #                 photo = photos.photos[0]
-  #                 await client.send_file(event.chat_id, photo, caption=info_msg)
-#               else:
-                   await event.reply('هذا المستخدم لا يمتلك صورة شخصية.')
- #      else:
-#           await event.reply('الرجاء الرد على رسالة المستخدم للحصول على معلوماته.')
-#   else:
-#       await event.reply('🤔شتسوي بي')
-            
 
-@client.on(events.NewMessage(pattern='\.تصفية الكروبات'))
+@client.on(events.NewMessage(pattern='.تصفية الكروبات'))
 async def exit_groups(event):
     if event.sender_id == (await client.get_me()).id:
         groups_exited = 0  # متغير لتتبع عدد المجموعات التي تم الخروج منها
