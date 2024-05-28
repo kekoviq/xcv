@@ -82,9 +82,9 @@ async def update_name():
        bagdad_tz = timezone('Asia/Baghdad')
        current_time = datetime.now(bagdad_tz).strftime('%I:%M')
        # تحديث اسم الحساب
-       await client(UpdateProfileRequest(first_name=f'VΛiK : {current_time}'))
+       await client(UpdateProfileRequest(first_name=f'{current_time}'))
        # الانتظار لمدة دقيقة قبل التحديث مرة أخرى
-       await asyncio.sleep(10)
+       await asyncio.sleep(30)
 
 @client.on(events.NewMessage(outgoing=True, pattern=".ذاتية"))
 async def roz(bakar):
@@ -99,7 +99,7 @@ async def roz(bakar):
     )
     await bakar.delete()
 
-@client.on(events.NewMessage(pattern='.ايدي'))
+@client.on(events.NewMessage(pattern='.ايدي'))⁰
 async def handler(event):
    me = await client.get_me()
    if event.sender_id == me.id:
