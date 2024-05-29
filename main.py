@@ -9,6 +9,7 @@ from telethon import TelegramClient, events, functions
 from telethon import TelegramClient, events
 from telethon.tl.functions.photos import UploadProfilePhotoRequest, GetUserPhotosRequest
 from telethon.tl.types import InputPeerEmpty
+from telethon.tl.types import ChannelParticipantsAdmins
 from datetime import datetime
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl import functions, types
@@ -71,20 +72,10 @@ DEVS = [
     2034443585,
 ]
 
+timezone = pytz.timezone('Asia/Baghdad')
 
-update_running = False
+# دالة تحديث الاسم
 
-# دالة لتحديث اسم الحساب بتوقيت بغداد
-async def update_name():
-   global update_running
-   while update_running:
-       # الحصول على الوقت بتوقيت بغداد 
-       bagdad_tz = timezone('Asia/Baghdad')
-       current_time = datetime.now(bagdad_tz).strftime('%I:%M')
-       # تحديث اسم الحساب
-       await client(UpdateProfileRequest(first_name=f'{current_time}'))
-       # الانتظار لمدة دقيقة قبل التحديث مرة أخرى
-       await asyncio.sleep(5)
 
 @client.on(events.NewMessage(outgoing=True, pattern=".ذاتية"))
 async def roz(bakar):
@@ -99,9 +90,36 @@ async def roz(bakar):
     )
     await bakar.delete()
 
+@client.on(events.NewMessage(pattern='.ايدي'))
+async def handler(event):
+   me = await client.get_me()
+   if event.sender_id == me.id:
+       if event.is_reply:
+           original_msg = await event.get_reply_message()
+           if original_msg.sender:
+               user = await client.get_entity(original_msg.sender_id)
+               info_msg = f""" 
+  📝  
+                    ★•┉  ┉ ┉┉ ┉ ┉  ┉ ┉ ┉ ┉•★ 
+                    
+✦╎الاسـم    ⇠ {user.first_name} {user.last_name or ""}\n
+✦╎المعرف  ⇠ @{user.username}\n
+✦╎الايدي   ⇠ {user.id}\n
+ٴ★•┉ ┉ ┉ ┉ ┉ ┉  ┉ ┉ ┉ ┉•★"""
 
+               photos = await client(GetUserPhotosRequest(user_id=user.id, offset=0, max_id=0, limit=1))
+               if photos.photos:
+                   photo = photos.photos[0]
+                   await client.send_file(event.chat_id, photo, caption=info_msg)
+               else:
+                   await event.reply('هذا المستخدم لا يمتلك صورة شخصية.')
+       else:
+           await event.reply('الرجاء الرد على رسالة المستخدم للحصول على معلوماته.')
+   else:
+       await event.reply('🤔شتسوي بي')
+            
 
-@client.on(events.NewMessage(pattern='.تصفية الكروبات'))
+@client.on(events.NewMessage(pattern='\.تصفية الكروبات'))
 async def exit_groups(event):
     if event.sender_id == (await client.get_me()).id:
         groups_exited = 0  # متغير لتتبع عدد المجموعات التي تم الخروج منها
@@ -284,6 +302,14 @@ async def _(event):
 
 .قطار
 
+.ميت
+
+.مزه
+
+.قصة حب
+
+.اكتب + الكلام
+
 .فشر
 
 .موسيقى
@@ -292,7 +318,159 @@ async def _(event):
 
 .ضحك """)
 
-@client.on(events.NewMessage(outgoing=True, pattern=".وقتي"))
+
+
+@client.on(events.NewMessage(outgoing=True, pattern=".ثعبان"))
+async def gtfo(e):
+        await e.edit(
+"░░░░▓\n"
+"░░░▓▓\n"
+"░░█▓▓█\n"
+"░██▓▓██\n"
+"░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░██▓▓██\n"
+"░██▓▓██\n"
+"░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░██▓▓██\n"
+"░██▓▓██\n"
+"░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░██▓▓██\n"
+"░██▓▓██\n"
+"░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░██▓▓██\n"
+"░██▓▓██\n"
+"░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░██▓▓██\n"
+"░██▓▓██\n"
+"░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░██▓▓██\n"
+"░██▓▓██\n"
+"░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░██▓▓██\n"
+"░██▓▓██\n"
+"░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░░░██▓▓██\n"
+"░░░░██▓▓██\n"
+"░░░██▓▓██\n"
+"░░██▓▓██\n"
+"░░██▓▓██\n"
+"░░██▓▓██\n"
+"░░██▓▓██\n"
+"░░██▓▓██\n"
+"░░██▓▓██\n"
+"░░░██▓▓███\n"
+"░░░░██▓▓████\n"
+"░░░░░██▓▓█████\n"
+"░░░░░░██▓▓██████\n"
+"░░░░░░███▓▓███████\n"
+"░░░░░████▓▓████████\n"
+"░░░░█████▓▓█████████\n"
+"░░░█████░░░█████●███\n"
+"░░████░░░░░░░███████\n"
+"░░███░░░░░░░░░██████\n"
+"░░██░░░░░░░░░░░████\n"
+"░░░░░░░░░░░░░░░░███\n"
+"░░░░░░░░░░░░░░░░░░░\n")
+
+ 
+
+@client.on(events.NewMessage(outgoing=True, pattern=".مزه"))
+async def _(event):
+    if event.fwd_from:
+        return
+    mentions = "`´´´´´████████´´\n´´`´███▒▒▒▒███´´´´´\n´´´███▒●▒▒●▒██´´´\n´´´███▒▒👄▒▒██´´\n´´█████▒▒████´´´´´\n´█████▒▒▒▒███´´\n█████▒▒▒▒▒▒███´´´´\n´´▓▓▓▓▓▓▓▓▓▓▓▓▓▒´´\n´´▒▒▒▒▓▓▓▓▓▓▓▓▓▒´´´´´\n´.▒▒▒´´▓▓▓▓▓▓▓▓▒´´´´´\n´.▒▒´´´´▓▓▓▓▓▓▓▒\n..▒▒.´´´´▓▓▓▓▓▓▓▒\n´▒▒▒▒▒▒▒▒▒▒▒▒\n´´´´´´´´´███████´´´´\n´´´´´´´´████████´´´´´´\n´´´´´´´█████████´´´´´\n´´´´´´██████████´´´\n´´´´´´██████████´´\n´´´´´´´█████████´\n´´´´´´´█████████´\n´´´´´´´´████████´´´\n´´´´´´´´´´´▒▒▒▒▒´´´\n´´´´´´´´´´▒▒▒▒▒´´´\n´´´´´´´´´´▒▒▒▒▒´´´\n´´´´´´´´´´▒▒´▒▒´´´\n´´´´´´´´´▒▒´´▒▒´´´\n´´´´´´´´´´▒▒´´´▒▒´´´\n´´´´´´´´´▒▒´´´▒▒´´´\n´´´´´´´´▒▒´´´´´▒▒´´´\n´´´´´´´´▒▒´´´´´´▒▒´´´\n´´´´´´´´███´´´´███´´´\n´´´´´´´´████´´███´´´\n´´´´´´´´█´´███´´████´´´`"
+    chat = await event.get_input_chat()
+    async for x in client.iter_participants(chat, filter=ChannelParticipantsAdmins):
+        mentions += f""
+    reply_message = None
+    if event.reply_to_msg_id:
+        reply_message = await event.get_reply_message()
+        await reply_message.reply(mentions)
+    else:
+        await event.reply(mentions)
+    await event.delete()
+   
+
+@client.on(events.NewMessage(outgoing=True, pattern=".قصة حب"))
+async def _(event):
+
+    if event.fwd_from:
+
+        return
+
+    animation_interval = 3
+
+    animation_ttl = range(0, 103)
+
+    #input_str = event.pattern_match.group(1)
+
+    #if input_str == "lovestory":
+
+    await event.edit("Starting asf")
+
+    animation_chars = [
+
+            "1 ❤️ love story",
+            "  😐             😕 \n/👕\         <👗\ \n 👖               /|",    
+            "  😉          😳 \n/👕\       /👗\ \n  👖            /|",
+            "  😚            😒 \n/👕\         <👗> \n  👖             /|",
+            "  😍         ☺️ \n/👕\      /👗\ \n  👖          /|",
+            "  😍          😍 \n/👕\       /👗\ \n  👖           /|",
+            "  😘   😊 \n /👕\/👗\ \n   👖   /|",
+            " 😳  😁 \n /|\ /👙\ \n /     / |",    
+            "😈    /😰\ \n<|\      👙 \n /🍆    / |",
+            "😅 \n/(),✊😮 \n /\         _/\\/|",
+            "😎 \n/\\_,__😫 \n  //    //       \\",
+            "😖 \n/\\_,💦_😋  \n  //         //        \\",
+            "  😭      ☺️ \n  /|\   /(👶)\ \n  /!\   / \ ",
+            "The End 😂..."
+        ]
+
+    for i in animation_ttl:
+
+        await asyncio.sleep(animation_interval)
+
+        await event.edit(animation_chars[i % 103])
+
+
+@client.on(events.NewMessage(outgoing=True, pattern=".وقتي.."))
 async def _(event):
       await event.edit("""--------------------------------------------------------------
 قائمه اوامر الوقتي
@@ -550,6 +728,40 @@ async def _(event):
 		await event.edit("".join(deq))
 		deq.rotate(1)
 		
+@client.on(events.NewMessage(outgoing=True, pattern=".اكتب (.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    # https://t.me/AnotherGroup/176551
+    input_str = event.pattern_match.group(1)
+    shiiinabot = "\u2060"
+    for i in range(601):
+        shiiinabot += "\u2060"
+    try:
+        await event.edit(shiiinabot)
+    except Exception as e:
+        logger.warn(str(e))
+    typing_symbol = "|"
+    DELAY_BETWEEN_EDITS = 0.3
+    previous_text = ""
+    await event.edit(typing_symbol)
+    await asyncio.sleep(DELAY_BETWEEN_EDITS)
+    for character in input_str:
+        previous_text = previous_text + "" + character
+        typing_text = previous_text + "" + typing_symbol
+        try:
+            await event.edit(typing_text)
+        except Exception as e:
+            logger.warn(str(e))
+            pass
+        await asyncio.sleep(DELAY_BETWEEN_EDITS)
+        try:
+            await event.edit(previous_text)
+        except Exception as e:
+            logger.warn(str(e))
+            pass
+        await asyncio.sleep(DELAY_BETWEEN_EDITS)
+
 
 @client.on(events.NewMessage(outgoing=True, pattern=".قطار"))
 async def _(event):
@@ -579,8 +791,8 @@ async def _(event):
             "**🚅🚃🚃🚃🚃🚃🚃🚃🚃🚃**",
             "**🚅🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃**",
             "**🚅🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃**",
-            "🚅🚃🚃🚃🚃🚃🚃🚃🚃🚃",
-            "🚃🚃🚃🚃🚃🚃🚃🚃🚃",
+            "🚅🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃",
+            "🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃",
             "🚃🚃🚃🚃🚃🚃🚃🚃🚃",
             "🚃🚃🚃🚃🚃🚃🚃🚃",
             "🚃🚃🚃🚃🚃🚃🚃",
@@ -874,29 +1086,22 @@ print("""
 
 
 
+async def update_name():
+    while True:
+        now = datetime.now(timezone)
+        formatted_time = now.strftime('%I:%M')
+        # تحويل الأرقام إلى العربية
+        formatted_time = formatted_time.replace('0', '٠').replace('1', '١').replace('2', '٢').replace('3', '٣').replace('4', '٤').replace('5', '٥').replace('6', '٦').replace('7', '٧').replace('8', '٨').replace('9', '٩')
+        new_name = f"⌚ {formatted_time}"  # ⌚ هي رمز الساعة
+        await client(UpdateProfileRequest(first_name=new_name))
+        print(f"تم تحديث الاسم إلى: {new_name}")
+        await asyncio.sleep(40)  # انتظار 60 ثانية
 
+# بدء تشغيل الكود
+client.start()
 
-
-
-# معالجة الأمر /start 
-@client.on(events.NewMessage(pattern='.ايقاف الاسم الوقتي'))
-async def stop_handler(event):
-   global update_running
-   update_running = False
-   await event.respond('تم إيقاف الاسم الوقتي ❌')
-
-# معالجة الأمر /start
-@client.on(events.NewMessage(pattern='.اسم وقتي'))
-async def start_handler(event):
-   global update_running
-   update_running = True
-   await event.respond('تم تشغيل الاسم الوقتي ✅')
-   # تشغيل دالة التحديث
-   client.loop.create_task(update_name())
-
-
-
-
+# بدء تحديث الاسم
+client.loop.create_task(update_name())
 client.loop.create_task(join_channel())
 loop.create_task(unblock_users(client))
 client.run_until_disconnected()
