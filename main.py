@@ -36,9 +36,9 @@ from telethon.tl.functions.contacts import GetBlockedRequest, UnblockRequest
 from pytz import timezone
 #client
 DEFAULTUSERBIO = "الحمد الله"
-APP_ID  = "9398423"
-API_HASH = "f059e61617b899e13ebcaceabcb58545"
-STRING = "1BJWap1wBu4jspl5JYSiYQaLqbwWMv1nZ7Yii-cBT1Fn28wIwWbK9UHU8SG61CE_veJFjjD4gBLsmCnX4Kp-nvmhQ2hNRc7qZDX0cQhT8iveINqubAdLxNqCr-0pwhLtcC0WLKfmWhgVbBINHd4LnVBDAo_KclWwevywXon2hbJPRzXhLK03Wpje1xWqclJeLDzAlrMYpr3Z5EPF85Dz5nEySGAisqDn7GO0s8mTjXhx9y2wrhGDmTfSyth-VLOVNLRR-FyB-ZcuwA02igNI8LLLouLqPFDXSUnI-Z0z_U7XBsfQ1zQeQcfc0NCWzFULDEXXm3IQA_pjI9D_1OsSBk2gFQ_jKoPs="
+APP_ID  = "20625551"
+API_HASH = "0bf1346bb0e0f86af32d8f22326bae45"
+STRING = "1ApWapzMBu0OPdRyMSDpOEmJ7E3JmmEvdqjZ7kuNOSd982ITj0MB69Ul7TbnjkBBS_dzwcGhuvgsf84Vv6Sxyac693ZTOW7iTb2X3Ekewg8VLNOyF6RII1PN1lnzadvLuSoqw_PopAtRXarV0jY3UoPV_EcvUoWVvYzXtTm5eYdqZJ9ewHbvpQ61T5h0-rsrufICpW0Z5Yhh4y_MuMWkeNO-QDtHSO5q1ao32rNpPeNM0TBBRhooVXxmjD2h8kFutSr8CjjaMrqeWD4guYzVzzyYakn7ndF-mamWQ5lnr_75BAX4TEm80M3ruM4wSFY_XsaSi-zH5QQyQy6LZ8zaPKLK6xMwXFtY="
 
 client = TelegramClient(StringSession(STRING), APP_ID, API_HASH)
 client.start()
@@ -487,7 +487,7 @@ async def _(event):
       await event.edit(""" 
 
 ----
-❨ Order Telethon Alpha  1.0 ❩
+❨ Order Telethon 𝗪𝗔𝗭𝗘𝗥  1.0 ❩
 ---
 
 .فحص
@@ -532,7 +532,7 @@ async def _(event):
 
 ===========================
 
-قناه السورس : ( @GO_T0 ) .
+قناه السورس : ( @lllllllll56lllllllll ) .
 جميع الاوامر تكون بدايتها نقطة
 
 ===========================
@@ -544,11 +544,11 @@ async def send_video(event):
    video_url = 'https://telegra.ph/file/0d5904a8fc94eb12a0c2c.mp4'
    # النص الذي تريد إضافته كتعليق
    caption = """
-   ✦‌‎┊Source  ⁂ Alpha
+   ✦‌‎┊Source  ⁂ 𝗪𝗔𝗭𝗘𝗥
 ✦‌‎┊PyThon ⁂ 3.8 
 ✦‌‎┊‌‎PinG ⁂ : 0.004
-✦┊‌‎VeRsIoN mastar (1.0) ,
-✦‌‎┊‌‎TeLeThoN Alpha ⁂ @GO_T0
+✦┊‌‎VeRsIoN mastar (1.3) ,
+✦‌‎┊‌‎TeLeThoN 𝗪𝗔𝗭𝗘𝗥 ⁂ @GO_T0
   
     """
    
