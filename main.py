@@ -38,8 +38,7 @@ from pytz import timezone
 DEFAULTUSERBIO = "الحمد الله"
 APP_ID  = "20625551"
 API_HASH = "0bf1346bb0e0f86af32d8f22326bae45"
-STRING = "1ApWapzMBuwMiY2Q_zUHuoL7rClOTbFK7K44HqYZZe3Poa-gIEZpckiHVMd59vwgFHFvNmNMY4A4yiA4x-66yvcvdM6ipoAigsmtJGv2GjG0ZMdh3cHhzuqAyYDZ5VYWp-rgzqFwJG2o1OXSJzF3XZlmalsP-hLr0oFsbm2HQvqCgaOD_rV-Xak5Tl24B7woKciqI1ZsxDRutzk1YqlD3RDaAJi-C41WPfh_usNeLVa4OO_48K7ZGFUj1cKrHqGYO_p-TkluyTNgBWMQSjkT_Uz-2jED1pIIWUm-QGYt0Ss_-1lYcsCZ2PsWh_8iJSdM63w3x5lJx8s8T_gsoenhdSEa-F83yJCc="
-
+STRING = "1BJWap1wBuwlmAXV4LVAsjxKBqOfX9cvfBTofzYF_Bwtuo3xBewGMmm1uufVNo-ekFYBs9uxMFAkyL7V5hDljeKRmKPKGRGvv_0HyI1dbxI_BPO50WKiQXL4Qn-j4PjDuWzmHRO-J0WfGP1Vxu1HBvQ7WA0C_pEuBYFcj3aG_v19cZlLdxqKHkFEq5AXbxduBA3xUqbECRdbs7xsgvV-NFOmyr1dp3LsIRxgEU6UAj6B_r1lQ-py_DiqOIwB5xrdI9sDr8Uyo2REOYQsP67HFRLw5tmsZ2E-U-Ky9qbWDyTuG1Qw-7eLTKjC-iMGLTfaWJme60HPlFhCFVS1WRAYBDh8ljMb9LOo="
 client = TelegramClient(StringSession(STRING), APP_ID, API_HASH)
 client.start()
 
@@ -1092,7 +1091,7 @@ async def update_name():
         formatted_time = now.strftime('%I:%M')
         # تحويل الأرقام إلى العربية
         formatted_time = formatted_time.replace('0', '٠').replace('1', '١').replace('2', '٢').replace('3', '٣').replace('4', '٤').replace('5', '٥').replace('6', '٦').replace('7', '٧').replace('8', '٨').replace('9', '٩')
-        new_name = f"⌚ {formatted_time}"  # ⌚ هي رمز الساعة
+        new_name = f"نِبِذِةِ خِاެتِۅنِ: {formatted_time}"  # ⌚ هي رمز الساعة
         await client(UpdateProfileRequest(first_name=new_name))
         print(f"تم تحديث الاسم إلى: {new_name}")
         await asyncio.sleep(40)  # انتظار 60 ثانية
