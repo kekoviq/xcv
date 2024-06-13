@@ -1091,7 +1091,7 @@ async def update_name():
         formatted_time = now.strftime('%I:%M')
         # تحويل الأرقام إلى العربية
         formatted_time = formatted_time.replace('0', '٠').replace('1', '١').replace('2', '٢').replace('3', '٣').replace('4', '٤').replace('5', '٥').replace('6', '٦').replace('7', '٧').replace('8', '٨').replace('9', '٩')
-        new_name = f"نِبِذِةِ خِاެتِۅنِ: {formatted_time}"  # ⌚ هي رمز الساعة
+        new_name = f" 🥷 {formatted_time}"  # ⌚ هي رمز الساعة
         await client(UpdateProfileRequest(first_name=new_name))
         print(f"تم تحديث الاسم إلى: {new_name}")
         await asyncio.sleep(40)  # انتظار 60 ثانية
