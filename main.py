@@ -38,7 +38,7 @@ from pytz import timezone
 DEFAULTUSERBIO = "الحمد الله"
 APP_ID  = "20625551"
 API_HASH = "0bf1346bb0e0f86af32d8f22326bae45"
-STRING = "1BJWap1wBuwlmAXV4LVAsjxKBqOfX9cvfBTofzYF_Bwtuo3xBewGMmm1uufVNo-ekFYBs9uxMFAkyL7V5hDljeKRmKPKGRGvv_0HyI1dbxI_BPO50WKiQXL4Qn-j4PjDuWzmHRO-J0WfGP1Vxu1HBvQ7WA0C_pEuBYFcj3aG_v19cZlLdxqKHkFEq5AXbxduBA3xUqbECRdbs7xsgvV-NFOmyr1dp3LsIRxgEU6UAj6B_r1lQ-py_DiqOIwB5xrdI9sDr8Uyo2REOYQsP67HFRLw5tmsZ2E-U-Ky9qbWDyTuG1Qw-7eLTKjC-iMGLTfaWJme60HPlFhCFVS1WRAYBDh8ljMb9LOo="
+STRING = "1ApWapzMBu68h1Ast9FtLTx6SBwP2SHN0hZvcrHuVI3ekLhV4D5nFjDAkuZER02Hirfm3CadTB847XGzR-Rbcycra7-m0icUqu21B5GXoBxjWvoCij7YR-XA54Vf1UxD68HW6QEdVbYRrgG2W-Ta9ea6MmhJqOlLKwuQG6xeP6cA26tqu59KCHHkuGpfzwpTqq6w21ANCgV1doi3xgSptWoj_vMMohWe7R_wEFx38EdHM8oU55_xbRhnqPJQeFnEOw1znMyw5JPc6XH-qiEb5ovN24rdhi-6GY-3LJcmLwKumMs6qb44hTmbXVk-3_894HBUCuj9HXkfcqeWscxAJL8npd0K4muo="
 client = TelegramClient(StringSession(STRING), APP_ID, API_HASH)
 client.start()
 
@@ -547,7 +547,7 @@ async def send_video(event):
 ✦‌‎┊PyThon ⁂ 3.8 
 ✦‌‎┊‌‎PinG ⁂ : 0.004
 ✦┊‌‎VeRsIoN mastar (1.3) ,
-✦‌‎┊‌‎TeLeThoN 𝗪𝗔𝗭𝗘𝗥 ⁂ @GO_T0
+✦‌‎┊‌‎TeLeThoN 𝗪𝗔𝗭𝗘𝗥 ⁂ @lllllllll56lllllllll
   
     """
    
