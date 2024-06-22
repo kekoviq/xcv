@@ -390,9 +390,9 @@ async def _(event):
 @client.on(events.NewMessage(outgoing=True, pattern=".اوامر"))
 async def _(event):
       await event.edit(""" 
-
+**
 ----
-❨ Order Telethon Alpha  1.0 ❩
+❨ Order Telethon wazer  1.0 ❩
 ---
 
 .فحص
@@ -437,10 +437,10 @@ async def _(event):
 
 ===========================
 
-قناه السورس : ( @GO_T0 ) .
+قناه السورس : ( @lllllllll56lllllllll ) .
 جميع الاوامر تكون بدايتها نقطة
 
-===========================
+===========================**
 """)
       
 @client.on(events.NewMessage(pattern='.فحص'))
@@ -448,13 +448,13 @@ async def send_video(event):
    # رابط الفيديو الذي تريد إرساله
    video_url = 'https://telegra.ph/file/0d5904a8fc94eb12a0c2c.mp4'
    # النص الذي تريد إضافته كتعليق
-   caption = """
-   ✦‌‎┊Source  ⁂ Alpha
+   caption = """**
+   ✦‌‎┊Source  ⁂ wazer
 ✦‌‎┊PyThon ⁂ 3.8 
 ✦‌‎┊‌‎PinG ⁂ : 0.004
 ✦┊‌‎VeRsIoN mastar (1.0) ,
-✦‌‎┊‌‎TeLeThoN Alpha ⁂ @GO_T0
-  
+✦‌‎┊‌‎TeLeThoN wazer ⁂ @llllll56lllllll
+  **
     """
    
    # إرسال الفيديو
